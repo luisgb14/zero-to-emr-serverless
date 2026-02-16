@@ -1,0 +1,39 @@
+# Copy to terraform.tfvars and set values for your environment.
+# Omit emr_serverless to use defaults (Spark, 1 driver / 2 executors, 4 vCPU / 8 GB / 100 GB max).
+
+region            = "us-east-1"
+project_name      = "emr-serverless"
+emr_release_label = "emr-7.8.0"
+
+emr_serverless = {
+  application_type = "Spark"
+  architecture     = "X86_64"
+
+  driver = {
+    worker_count = 1
+    cpu          = "1 vCPU"
+    memory       = "2 GB"
+    disk         = "20 GB"
+  }
+
+  executor = {
+    worker_count = 2
+    cpu          = "1 vCPU"
+    memory       = "2 GB"
+    disk         = "20 GB"
+  }
+
+  maximum_capacity = {
+    cpu    = "16 vCPU"
+    memory = "64 GB"
+    disk   = "100 GB"
+  }
+
+  auto_stop_idle_minutes = 15
+}
+
+tags = {
+  Project   = "zero-to-emr-serverless"
+  ManagedBy = "Terraform"
+  Env       = "dev"
+}
